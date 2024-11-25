@@ -20,14 +20,12 @@ export const userController = {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
       return next(new HTTPError(401, "Utilisateur ou mot de passe incorrect"));
     }
 
     const generateToken = (user) => {
       let roleId;
-
       if (user.role === "family" && user.family) {
         roleId = user.family.id; // ID de la famille
       } else if (user.role === "association" && user.association) {
@@ -46,10 +44,10 @@ export const userController = {
     };
 
     // Créer le token JWT pour l'utilisateur authentifié
-    const token = generateToken(user);
+    const sendToken = generateToken(user);
 
     // Répondre avec le token et les infos utilisateur
-    res.status(200).json({ message: "Authentification réussie", token });
+    res.status(200).json({ message: "Authentification réussie", sendToken });
 },
   signup: async (req, res, next) => {
     const {
@@ -110,6 +108,8 @@ export const userController = {
         .json({ message: "Utilisateur créé avec succès", newUser });
     } catch (error) {
       await transaction.rollback();
+      console.log(error);
+      
       if (error.name === "SequelizeUniqueConstraintError") {
         return next(new HTTPError(400, "L'email est déjà utilisé"));
       } else {

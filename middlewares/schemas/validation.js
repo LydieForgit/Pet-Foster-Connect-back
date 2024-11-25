@@ -50,8 +50,8 @@ checkSignUp: joi.object({
         "string.pattern.base": "Le numéro de téléphone doit contenir 10 chiffres",
         "any.required": "Le numéro de téléphone est requis",
         "string.empty": "Veuillez saisir votre numéro de téléphone"}),
-    city: joi.string().max(64),
-    address: joi.string().max(255),
+    city: joi.string().max(64).allow(null, '').optional(),
+    address: joi.string().max(255).allow(null, '').optional(),
     department: joi.number().integer()
         .when("role", {is: "association", then: joi.required(), otherwise: joi.optional()})
         .messages({
