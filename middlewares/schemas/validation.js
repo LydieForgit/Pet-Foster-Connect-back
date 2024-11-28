@@ -67,7 +67,7 @@ checkSignUp: joi.object({
         .messages({
             "any.required": "Le numéro RNA/SIREN de l'association est requis",
             "string.empty": "Veuillez saisir le numéro RNA/SIREN de l'association"}),
-    picture: joi.string().max(255),
+    picture: joi.string().max(255).allow(null, '').optional(),
 }),        
 
 //schéma pour valider l'ajout d'un animal
@@ -120,20 +120,20 @@ export const patchSchemas = {
     checkPatchDataAssociation: postSchemas.checkSignUp
     .fork(Object.keys(postSchemas.checkSignUp.describe().keys), (newData) => newData.optional())
     .keys({
-        address: joi.string().max(255),
+        address: joi.string().max(255).allow(null, '').optional(),
         department: joi.number().integer(),
-        city: joi.string().max(64),
-        speciality: joi.array()
+        city: joi.string().max(64).allow(null, '').optional(),
+        speciality: joi.array().allow(null, '').optional()
         .items(joi.string().valid('chien', 'chat', 'lapin', 'rongeur', 'oiseau', 'reptile', 'autre')),
-        website: joi.string().max(255)
+        website: joi.string().max(255).allow(null, '').optional()
     }),
 
     checkPatchDataFamily: postSchemas.checkSignUp
     .fork(Object.keys(postSchemas.checkSignUp.describe().keys), (newData) => newData.optional())
     .keys({
-        householdComposition: joi.string().max(255),
-        hasOtherPets: joi.string().max(255),
-        experience: joi.string().max(255),
+        householdComposition: joi.string().max(255).allow(null, '').optional(),
+        hasOtherPets: joi.string().max(255).allow(null, '').optional(),
+        experience: joi.string().max(255).allow(null, '').optional(),
     }),
 
     checkPatchDataApplication: postSchemas.checkDataApplication

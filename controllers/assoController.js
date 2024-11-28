@@ -12,9 +12,7 @@ export const assoController = {
     },
 
     getOne : async (req, res, next) => {
-        const association = await Association.findByPk(req.params.id, {
-            include: [ "user"]
-        });
+        const association = await Association.findByPk(req.params.id);
         if(!association){
             return next(new HTTPError(404, "Association introuvable"));
         }

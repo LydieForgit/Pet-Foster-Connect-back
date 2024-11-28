@@ -10,13 +10,11 @@ export const authenticateJWTWithRole = (roles = []) => {
             if (err) {
                 return next(new HTTPError(403, "Accès non autorisé")); // Token invalide (Interdit)
             }
-
             // Vérification des rôles
             const userRole = user.role; // Récupère le rôle de l'utilisateur à partir du token
             if (!roles.includes(userRole)) {
                 return next(new HTTPError(403, "Accès non autorisé")); // Accès refusé pour les rôles insuffisants
             }
-
             // Ajouter les informations utilisateur à la requête
             req.user = user;  // Ajout du payload complet du JWT à la requête
             next();

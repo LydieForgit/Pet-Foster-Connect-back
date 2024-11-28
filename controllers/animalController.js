@@ -8,7 +8,7 @@ export const animalController = {
             include : ["association"],
             where: {family_id: null}
         });
-        if(!animals){
+        if(animals.length === 0){
             return next(new HTTPError(404, "Aucun animal à placer dans cette association"));
         }
         res.status(200).json(animals);
@@ -28,12 +28,33 @@ export const animalController = {
                 required: true,
             }],
         });
-        if(!animals){
+        if(animals.length === 0){
             return next(new HTTPError(404, "Pas de candidatures pour cette association"));
         }
         res.status(200).json(animals);
     },
 
+    async GetOneApplicationFromAnimal(req, res, next) {
+        const animalId = req.params.id;
+        const applicationId = req.params.id2;
+        const application = await Animal.findOne({
+            where: {
+                id: animalId
+            },
+            include: [{
+                    association: "submit",  
+                    through: {
+                        attributes: ['id', 'message', 'status'], 
+                        where: { id: applicationId }
+                    },
+                }]
+        });
+        if(!application){
+            return next(new HTTPError(404, "Candidature introuvable"));
+        }
+        res.status(200).json(application);
+    },
+    
     async GetAllAnimalsWithAnsweredApplicationsForAssociation(req, res, next) {
         const associationId = req.params.id;
         const animals = await Animal.findAll({  
@@ -50,7 +71,7 @@ export const animalController = {
                 required: true,
             }],
         });
-        if(!animals){
+        if(animals.length === 0){
             return next(new HTTPError(404, "Pas de candidatures pour cette association"));
         }
         res.status(200).json(animals);
@@ -65,8 +86,8 @@ export const animalController = {
             }]
         });
 
-        if(!animals){
-            return next(new HTTPError(404, "Pas de candidatures pour cette association"));
+        if(animals.length === 0){
+            return next(new HTTPError(404, "Pas de candidatures pour cette famille"));
         }
         res.status(200).json(animals);
     },
@@ -77,7 +98,7 @@ export const animalController = {
             limit: 3,
             include : ["association"],
         })
-        if(!animals){
+        if(animals.length === 0){
             return next(new HTTPError(404, "Aucun animal à placer en famille d'accueil"));
         }
         res.status(200).json(animals);
@@ -106,8 +127,8 @@ export const animalController = {
                 family_id : familyId 
             }
         });
-        if (!animals){
-            return res.status(200).json("Cette famille n'a pas d'animaux");
+        if (animals.length === 0) {
+            return next(new HTTPError(404).json("Cette famille n'a pas d'animaux."));
         }
         res.status(200).json(animals);
     },
@@ -119,8 +140,8 @@ export const animalController = {
                 association_id : associationId 
             }
         });
-        if (!animals){
-            return res.status(200).json("Cette association n'a pas encore d'animaux");
+        if (animals.length === 0){
+            return next(new HTTPError(404).json("Cette association n'a pas encore d'animaux"));
         }
         res.status(200).json(animals);
     },
@@ -161,21 +182,4 @@ export const animalController = {
         return res.status(204).end();
     },
 
-    async GetOneApplicationFromAnimal(req, res, next) {
-        const animalId = req.params.id;
-        const applicationId = req.params.id2;
-        const animal = await Animal.findOne({
-            where: {
-                id: animalId
-            },
-            include: [{
-                    association: "submit",  
-                    through: {
-                        attributes: ['id', 'message', 'status'], 
-                        where: { id: applicationId }
-                    },
-                }]
-        });
-        res.status(200).json(animal);
-    },
 };
