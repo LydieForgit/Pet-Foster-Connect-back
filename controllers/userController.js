@@ -16,37 +16,29 @@ export const userController = {
       include: ["association", "family"],
     });
     if (!user) {
-      return next(new HTTPError(404, "Utilisateur ou mot de passe incorrect"));
+      return next(new HTTPError(401, "Utilisateur ou mot de passe incorrect"));
     }
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return next(new HTTPError(401, "Utilisateur ou mot de passe incorrect"));
     }
-
     const generateToken = (user) => {
       let roleId;
       if (user.role === "family" && user.family) {
-        roleId = user.family.id; // ID de la famille
+        roleId = user.family.id;
       } else if (user.role === "association" && user.association) {
-        roleId = user.association.id; // ID de l'association
+        roleId = user.association.id;
       } else {
         return next(new HTTPError(404,"Rôle utilisateur non reconnu ou association/famille non définie"));    
       }
-
-      // Générer le JWT avec l'ID, email et rôle
       const token = jwt.sign(
-        { id: roleId, email: user.email, role: user.role }, // Payload du JWT
-        jwtSecret, // Secret utilisé pour signer le token
-        { expiresIn: "1h" } // Durée de validité du token
+        { id: roleId, email: user.email, role: user.role },
+        jwtSecret,
+        { expiresIn: "1h" } 
       );
-      return token; // Retourne le JWT
+      return token; 
     };
-
-    // Créer le token JWT pour l'utilisateur authentifié
     const sendToken = generateToken(user);
-
-    // Répondre avec le token et les infos utilisateur
     res.status(200).json({ message: "Authentification réussie", sendToken });
 },
   signup: async (req, res, next) => {
