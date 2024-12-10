@@ -15,10 +15,10 @@ export const app = express();
 const port = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: "*", // Seule cette URL est autorisée à accéder
-  methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH"], // Méthodes HTTP autorisées
-  allowedHeaders: ["Content-Type", "Accept", "Authorization"], // En-têtes autorisés
-  optionsSuccessStatus: 200, // Réponse
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || "http://localhost:5173",
+  methods: ["GET", "POST", "OPTIONS", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Accept", "Authorization"],
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));

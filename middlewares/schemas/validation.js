@@ -19,6 +19,10 @@ checkSignIn: joi.object({
         "any.required": "L'email est requis",
         "string.empty": "Veuillez saisir une adresse mail"}),
     password: joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required()
+    .messages({
+        //"type de l'erreur généré par joi": "message personnalisé"
+        "any.required": "Le mot de passe est requis",
+        "string.empty": "Veuillez saisir un mot de passe"}),
 }),
 
 //schéma pour valider l'inscription d'un user

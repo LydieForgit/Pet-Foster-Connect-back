@@ -9,7 +9,7 @@ export const animalController = {
             where: {family_id: null}
         });
         if(animals.length === 0){
-            return next(new HTTPError(404, "Aucun animal à placer dans cette association"));
+            return res.status(200).json("Aucun animal à placer dans cette association");
         }
         res.status(200).json(animals);
     },
@@ -28,9 +28,9 @@ export const animalController = {
                 required: true,
             }],
         });
-        if(animals.length === 0){
-            return next(new HTTPError(404, "Pas de candidatures pour cette association"));
-        }
+        // if(animals.length === 0){
+        //     return res.status(200).json("Pas de candidatures en attente");
+        // }
         res.status(200).json(animals);
     },
 
@@ -71,9 +71,9 @@ export const animalController = {
                 required: true,
             }],
         });
-        if(animals.length === 0){
-            return next(new HTTPError(404, "Pas de candidatures pour cette association"));
-        }
+        // if(animals.length === 0){
+        //     return res.status(200).json("Cette rubrique est vide");
+        // }
         res.status(200).json(animals);
     },
 
@@ -85,10 +85,9 @@ export const animalController = {
                 where: { id: familyId },
             }]
         });
-
-        if(animals.length === 0){
-            return next(new HTTPError(404, "Pas de candidatures pour cette famille"));
-        }
+        // if(animals.length === 0){
+        //     return res.status(200).json("Pas encore de candidatures");
+        // }
         res.status(200).json(animals);
     },
 
@@ -140,9 +139,9 @@ export const animalController = {
                 association_id : associationId 
             }
         });
-        if (animals.length === 0){
-            return next(new HTTPError(404).json("Cette association n'a pas encore d'animaux"));
-        }
+        // if(animals.length === 0){
+        //     return res.status(200).json("Cette association n'a pas encore d'animaux");
+        // }
         res.status(200).json(animals);
     },
 

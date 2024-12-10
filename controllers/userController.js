@@ -32,7 +32,7 @@ export const userController = {
         return next(new HTTPError(404,"Rôle utilisateur non reconnu ou association/famille non définie"));    
       }
       const token = jwt.sign(
-        { id: roleId, email: user.email, role: user.role },
+        { id: roleId, role: user.role },
         jwtSecret,
         { expiresIn: "1h" } 
       );

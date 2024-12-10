@@ -2,7 +2,7 @@
 
 ## Mise en place du projet
 
-### Une fois le projet cloné :
+### Une fois le projet cloné
 
 **Commande pour initialiser le projet et installer les dépendances**
 ```npm init```
