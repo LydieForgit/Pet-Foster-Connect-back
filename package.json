@@ -6,10 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js",
-    "db:create": "psql -U petfosterconnect -d petfosterconnect -f database/create_tables.sql",
-    "db:populate": "psql -U petfosterconnect -d petfosterconnect -f database/populate_tables.sql",
-    "db:reset": "npm run db:create && npm run db:populate"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
