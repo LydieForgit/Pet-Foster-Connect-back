@@ -6,11 +6,11 @@ export class Family extends Model {}
 Family.init({
     firstname: {
         type: DataTypes.STRING(64),
-        allowNull: false,
+        allowNull: true,
     },
     lastname: {
         type: DataTypes.STRING(64),
-        allowNull: false,
+        allowNull: true,
     },
     city: {
         type: DataTypes.STRING(64),
@@ -18,7 +18,7 @@ Family.init({
     },
     phone: {
         type: DataTypes.STRING(15),
-        allowNull: false,
+        allowNull: true,
     },
     picture: {
         type: DataTypes.STRING(255),

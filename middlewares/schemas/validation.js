@@ -18,7 +18,7 @@ checkSignIn: joi.object({
         "string.email": "Le format de l'email doit être valide",
         "any.required": "L'email est requis",
         "string.empty": "Veuillez saisir une adresse mail"}),
-    password: joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required()
+    password: joi.string().required()
     .messages({
         //"type de l'erreur généré par joi": "message personnalisé"
         "any.required": "Le mot de passe est requis",
@@ -32,45 +32,23 @@ checkSignUp: joi.object({
         "string.email": "Le format de l'email doit être valide",
         "any.required": "L'email est requis",
         "string.empty": "Veuillez saisir une adresse mail"}),
-    password: joi.string().pattern(new RegExp("^[a-zA-Z0-9]{7,30}$")).required()
+    password: joi.string().pattern(new RegExp(`^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{8,30}$`)).required()
     .messages({
-        "string.pattern.base": "Le mot de passe doit contenir au moins 7 caractères",
-        "any.required": "Le numéro de téléphone est requis",
+        "string.pattern.base": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
+        "any.required": "Le mot de passe est requis",
         "string.empty": "Veuillez saisir un mot de passe"}),
     //repeat_password: joi.ref('password'),
     role: joi.string().valid("family", "association").required()
     .messages({
         "any.only": "Veuillez sélectionner famille ou association"}),
-    firstname: joi.string().max(64).required()
-    .messages({
-        "any.required": "Le prénom est requis",
-        "string.empty": "Veuillez saisir votre prénom"}),
-    lastname: joi.string().max(64).required()
-    .messages({
-        "any.required": "Le nom de famille est requis",
-        "string.empty": "Veuillez saisir votre nom de famille"}),
-    phone: joi.string().max(15).pattern(new RegExp("^[0-9]{10}$")).required()
-    .messages({
-        "string.pattern.base": "Le numéro de téléphone doit contenir 10 chiffres",
-        "any.required": "Le numéro de téléphone est requis",
-        "string.empty": "Veuillez saisir votre numéro de téléphone"}),
+    firstname: joi.string().max(64).allow(null, '').optional(),
+    lastname: joi.string().max(64).allow(null, '').optional(),
+    phone: joi.string().max(15).pattern(new RegExp("^[0-9]{10}$")).optional(),
     city: joi.string().max(64).allow(null, '').optional(),
     address: joi.string().max(255).allow(null, '').optional(),
-    department: joi.number().integer()
-        .when("role", {is: "association", then: joi.required(), otherwise: joi.optional()})
-        .messages({
-            "any.required": "Le departement est requis",
-            "string.empty": "Veuillez choisir votre département"}),
-    name: joi.string().max(64)
-        .when("role", {is: "association", then: joi.required(), otherwise: joi.optional()})
-        .messages({
-            "any.required": "Le nom de l'association est requis",
-            "string.empty": "Veuillez saisir le nom de l'association"}),
-    companyRegister: joi.string().max(32)
-        .when("role", {is: "association", then: joi.required(), otherwise: joi.optional()})
-        .messages({
-            "any.required": "Le numéro RNA/SIREN de l'association est requis",
-            "string.empty": "Veuillez saisir le numéro RNA/SIREN de l'association"}),
+    department: joi.number().integer().allow(null, '').optional(),
+    name: joi.string().max(64).allow(null, '').optional(),
+    companyRegister: joi.string().max(32).allow(null, '').optional(),
     picture: joi.string().max(255).allow(null, '').optional(),
 }),        
 

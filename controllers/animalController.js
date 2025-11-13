@@ -106,7 +106,6 @@ export const animalController = {
 
     async GetOneAnimalWithAssociation(req, res, next) {
         const animalId  = req.params.id;
-        console.log(animalId)
         const animal = await Animal.findOne({
             where : {
                 id: animalId
@@ -146,7 +145,6 @@ export const animalController = {
     },
 
     async CreateAnimal(req, res, next) {
-        console.log(req.body);
         const associationId  = req.params.id;
         const {name, species, age, gender, description, picture} = req.body;
         const newAnimal = await Animal.create({

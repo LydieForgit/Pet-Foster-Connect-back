@@ -46,14 +46,6 @@ export const userController = {
       email,
       password,
       role,
-      firstname,
-      lastname,
-      phone,
-      name,
-      companyRegister,
-      department,
-      address,
-      city,
     } = req.body;
     const transaction = await sequelize.transaction();
     try {
@@ -69,25 +61,14 @@ export const userController = {
       if (newUser.role === "family") {
         await Family.create(
           {
-            user_id: newUser.id,
-            firstname,
-            lastname,
-            phone,
+            user_id: newUser.id
           },
           { transaction }
         );
       } else if (newUser.role === "association") {
         await Association.create(
           {
-            user_id: newUser.id,
-            firstname,
-            lastname,
-            name,
-            phone,
-            companyRegister,
-            department,
-            address,
-            city,
+            user_id: newUser.id
           },
           { transaction }
         );
@@ -100,8 +81,6 @@ export const userController = {
         .json({ message: "Utilisateur créé avec succès", newUser });
     } catch (error) {
       await transaction.rollback();
-      console.log(error);
-      
       if (error.name === "SequelizeUniqueConstraintError") {
         return next(new HTTPError(400, "L'email est déjà utilisé"));
       } else {

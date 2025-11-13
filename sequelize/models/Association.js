@@ -6,15 +6,15 @@ export class Association extends Model {}
 Association.init({
     name: {
         type: DataTypes.STRING(64),
-        allowNull: false,
+        allowNull: true,
     },
     firstname: {
         type: DataTypes.STRING(64),
-        allowNull: false,
+        allowNull: true,
     },
     lastname: {
         type: DataTypes.STRING(64),
-        allowNull: false,
+        allowNull: true,
     },
     address: {
         type: DataTypes.STRING(255),
@@ -26,12 +26,12 @@ Association.init({
     },
     companyRegister: {
         type: DataTypes.STRING(32),
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     department: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     speciality: {
         type: DataTypes.ARRAY(DataTypes.STRING), // Définition du champ speciality
@@ -48,7 +48,7 @@ Association.init({
     },
     phone: {
         type: DataTypes.STRING(15),
-        allowNull: false,
+        allowNull: true,
     },
     picture: {
         type: DataTypes.STRING(255),
