@@ -9,20 +9,20 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_USER_FILE: /run/secrets/db_user
       POSTGRES_DB: ${POSTGRES_DB}
+      PORT: 3000
       DB_HOST: db
       DB_PORT: 5432
       JWT_SECRET_FILE: /run/secrets/jwt_secret
+      USE_DOCKER_SECRETS: true
     secrets:
       - db_password
       - db_user
       - jwt_secret
     depends_on:
       - db
-    volumes:
-      - .:/usr/src/app
 
   db:
-    image: postgres:latest
+    image: postgres:16-alpine
     container_name: db_pfc
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password

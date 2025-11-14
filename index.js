@@ -3,16 +3,16 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import router from "./Router.js";
-import { upload } from "./middlewares/multerUpload.js";
-import { bodySanitizer } from "./middlewares/sanitizeHtml.js";
+import router from "./app/Router.js";
+import { upload } from "./app/middlewares/multerUpload.js";
+import { bodySanitizer } from "./app/middlewares/sanitizeHtml.js";
 
 // Conversion de import.meta.url en __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 
 const corsOptions = {
   origin: process.env.ALLOWED_ORIGINS?.split(',') || "http://localhost:5173",

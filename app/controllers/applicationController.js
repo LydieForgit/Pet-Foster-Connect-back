@@ -1,4 +1,4 @@
-import { Application } from "../sequelize/models/index.js";
+import { Application } from "../utils/sequelize/models/index.js";
 import { HTTPError } from "../middlewares/errors/httpError.js";
 
 export const applicationController = {

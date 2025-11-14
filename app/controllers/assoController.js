@@ -1,4 +1,4 @@
-import { Association } from "../sequelize/models/index.js";
+import { Association } from "../utils/sequelize/models/index.js";
 import { HTTPError } from "../middlewares/errors/httpError.js";
 
 export const assoController = {

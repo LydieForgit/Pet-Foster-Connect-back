@@ -1,4 +1,4 @@
-import { Animal } from "../sequelize/models/index.js";
+import { Animal } from "../utils/sequelize/models/index.js";
 import { HTTPError } from "../middlewares/errors/httpError.js";
 
 export const animalController = {

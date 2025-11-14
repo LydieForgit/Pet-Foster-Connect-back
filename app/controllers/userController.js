@@ -1,13 +1,13 @@
-import { User, Family, Association } from "../sequelize/models/index.js";
+import { User, Family, Association } from "../utils/sequelize/models/index.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { getSecrets } from "../utils/secrets.js";
-import { sequelize } from "../sequelize/sequelize-client.js";
+import { my_jwt } from "../utils/secrets.js";
+import { sequelize } from "../utils/sequelize/sequelize-client.js";
 import { HTTPError } from "../middlewares/errors/httpError.js";
 import "dotenv/config";
 import transporter from "../config/nodemailerConfig.js";
 
-const jwtSecret = process.env.JWT_SECRET || getSecrets("run/secrets/jwt_secret");
+//const jwtSecret = process.env.JWT_SECRET || getSecrets("run/secrets/jwt_secret");
 
 export const userController = {
   signin: async (req, res, next) => {
@@ -34,7 +34,7 @@ export const userController = {
       }
       const token = jwt.sign(
         { id: roleId, role: user.role },
-        jwtSecret,
+        my_jwt.secret,
         { expiresIn: "1h" } 
       );
       return token; 
@@ -99,7 +99,7 @@ export const userController = {
         return next(new HTTPError(404, "Utilisateur introuvable"));
       } 
     // Générer un token de réinitialisation en utilisant jsonwebtoken
-    const resetToken = jwt.sign({ email }, jwtSecret, { expiresIn: "1h" });
+    const resetToken = jwt.sign({ email }, my_jwt.secret, { expiresIn: "1h" });
   
     const mailOptions = {
       from: process.env.NODEMAILER_USER,
@@ -117,7 +117,7 @@ export const userController = {
   resetPassword: async (req, res, next) => {
       const { token, newPassword } = req.body;
       // Valider le token et récupérer l'utilisateur
-      const user = jwt.verify(token, jwtSecret);
+      const user = jwt.verify(token, my_jwt.secret);
         if (!user) {
           return next(new HTTPError(400,"Token invalide"));
         }

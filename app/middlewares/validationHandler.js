@@ -1,4 +1,4 @@
-import { HTTPError } from "../middlewares/errors/httpError.js";
+import { HTTPError } from "./errors/httpError.js";
 
 //les paramètres schema et property font référence au schéma et à la propriété(body ou params notamment) qu'on souhaite valider
 export const validationHandler = (schema, property) => {

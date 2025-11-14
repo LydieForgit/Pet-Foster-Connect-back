@@ -1,4 +1,4 @@
-import { Family } from "../sequelize/models/index.js";
+import { Family } from "../utils/sequelize/models/index.js";
 import { HTTPError } from "../middlewares/errors/httpError.js";
 
 export const familyController = {

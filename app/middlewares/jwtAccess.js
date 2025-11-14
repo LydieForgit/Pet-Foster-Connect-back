@@ -1,16 +1,16 @@
 import jwt from "jsonwebtoken";
-import { HTTPError } from "../middlewares/errors/httpError.js";
-import { getSecrets } from "../utils/secrets.js";
+import { HTTPError } from "./errors/httpError.js";
+import { my_jwt } from "../utils/secrets.js";
 import "dotenv/config";
 
-const jwtSecret = process.env.JWT_SECRET || getSecrets("run/secrets/jwt_secret");
+// const jwtSecret = process.env.JWT_SECRET || getSecrets("run/secrets/jwt_secret");
 
 export const authenticateJWTWithRole = (roles = []) => {
   return (req, res, next) => {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
     if (token) {
         // jwtSecret doit être défini
-        jwt.verify(token, jwtSecret, (err, user) => {
+        jwt.verify(token, my_jwt.secret, (err, user) => {
             if (err) {
                 return next(new HTTPError(403, "Accès non autorisé")); // Token invalide (Interdit)
             }
