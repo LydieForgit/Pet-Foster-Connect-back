@@ -3,8 +3,6 @@ import { HTTPError } from "./errors/httpError.js";
 import { my_jwt } from "../utils/secrets.js";
 import "dotenv/config";
 
-// const jwtSecret = process.env.JWT_SECRET || getSecrets("run/secrets/jwt_secret");
-
 export const authenticateJWTWithRole = (roles = []) => {
   return (req, res, next) => {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];

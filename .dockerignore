@@ -4,5 +4,3 @@ secrets/
 database/
 Dockerfile
 docker-compose.yaml
-package-lock.json
-package.json

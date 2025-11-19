@@ -5,9 +5,7 @@ import { my_jwt } from "../utils/secrets.js";
 import { sequelize } from "../utils/sequelize/sequelize-client.js";
 import { HTTPError } from "../middlewares/errors/httpError.js";
 import "dotenv/config";
-import transporter from "../config/nodemailerConfig.js";
-
-//const jwtSecret = process.env.JWT_SECRET || getSecrets("run/secrets/jwt_secret");
+import sgMail from "@sendgrid/mail";
 
 export const userController = {
   signin: async (req, res, next) => {
@@ -100,17 +98,23 @@ export const userController = {
       } 
     // Générer un token de réinitialisation en utilisant jsonwebtoken
     const resetToken = jwt.sign({ email }, my_jwt.secret, { expiresIn: "1h" });
-  
+    
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
     const mailOptions = {
-      from: process.env.NODEMAILER_USER,
+      from: process.env.SENDGRID_MAIL,
       to: email,
-      subject: "Réinitialisation pet-foster-connect",
-      text: `Bienvenue sur Pet Foster Connect. 
-      Vous avez demandé à réinitialiser votre mot de passe, cliquez sur ce lien pour le réinitialiser :
-      https://pet-foster-connect.website/reset_password/${resetToken}`,
+      subject: "Réinitialisation mot de passe pet-foster-connect",
+      html: `          
+        <h2>Bienvenue sur Pet Foster Connect</h2>
+        <p>Vous avez demandé à réinitialiser votre mot de passe.</p>
+        <p>Cliquez sur ce lien pour le réinitialiser :</p>
+        <a href="http://localhost:3000/reset_password/">Réinitialiser mon mot de passe</a>
+        <p>Ce lien expire dans 1 heure.</p>
+        `,
     };
     // Envoi de l'e-mail en utilisant le transporteur nodemailer
-    await transporter.sendMail(mailOptions);
+    await sgMail.send(mailOptions);
     res.status(200).json("E-mail de réinitialisation envoyé"); 
   },
   
