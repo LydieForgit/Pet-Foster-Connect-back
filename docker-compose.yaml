@@ -13,11 +13,15 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       JWT_SECRET_FILE: /run/secrets/jwt_secret
+      SENDGRID_API_KEY: /run/secrets/sendgrid_api_key
+      SENDGRIP_MAIL: /run/secrets/sendgrid_mail
       USE_DOCKER_SECRETS: true
     secrets:
       - db_password
       - db_user
       - jwt_secret
+      - sendgrid_api_key
+      - sendgrid_mail
     depends_on:
       - db
 
@@ -43,4 +47,8 @@ secrets:
     file: ./secrets/db_user.txt
   jwt_secret:
     file: ./secrets/jwt_secret.txt
+  sendgrid_api_key:
+    file: ./secrets/sendgrid_api_key.txt
+  sendgrid_mail:
+    file: ./secrets/sendgrid_mail.txt
 
