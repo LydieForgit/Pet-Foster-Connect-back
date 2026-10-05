@@ -22,12 +22,10 @@ Le projet est conteneurisé avec **Docker** afin de simplifier le lancement, l�
 
 ```
 .
-├── app/
-│   ├── config/
-│   ├── controllers/
-│   ├── middlewares/
-│   ├── utils/
-│   └── Router.js/
+├── config/
+├── controllers/
+├── middlewares/
+├── utils/
 ├── database/                      # Scripts SQL d'initialisation
 │   ├── create_tables.sql
 │   └── populate_tables.sql
@@ -39,10 +37,11 @@ Le projet est conteneurisé avec **Docker** afin de simplifier le lancement, l�
 ├── .env                          # Variable d'environnement en local
 ├── .env.example
 ├── .gitignore
-├── docker-compose.yml
+├── docker-compose.yaml
 ├── Dockerfile
 ├── index.js
 ├── package.json
+├── Router.js
 └── README.md
 ```
 
@@ -72,7 +71,7 @@ cd <nom du projet>
 1️⃣ Copier le fichier d'exemple, puis remplir les valeurs nécessaires
 
 ```bash
-cp .env.example .env
+cp .env.exemple .env
 ```
 
 2️⃣ Installer les dépendances
