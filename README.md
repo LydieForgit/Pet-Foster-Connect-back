@@ -30,9 +30,9 @@ Le projet est conteneurisé avec **Docker** afin de simplifier le lancement, l�
 │   ├── create_tables.sql
 │   └── populate_tables.sql
 ├── secrets/                      # Utilisation des secrets avec Docker
-│   ├── db_user
-│   ├── db_password
-│   └── jwt_secret
+│   ├── db_user.txt
+│   ├── db_password.txt
+│   └── jwt_secret.txt
 ├── .dockerignore
 ├── .env                          # Variable d'environnement en local
 ├── .env.example
@@ -143,6 +143,37 @@ http://localhost:3000/
 ```
 
 Liste des endpoints:
+
+| Méthodes          | Endpoints                                 |
+| ------------------| ------------------------------------------|
+| POST              | /signin                                   |
+| POST              | /signup                                   |
+| GET               | /animals                                  |
+| GET               | /lastanimals                              |
+| GET               | /animal/:id                               |
+| PATCH             | /animal/:id                               |
+| DELETE            | /animal/:id                               |
+| GET               | /association/:id/animals                  |
+| POST              | /association/:id/animal                   |
+| GET               | /association/:id/applications             |
+| GET               | /association/:id/applicationsAnswered     |
+| GET               | /family/:id/animals                       |
+| GET               | /family/:id/applications                  |
+| POST              | /animal/:id/family/:id2/application       |
+| PATCH             | /application/:id                          |
+| GET               | /animal/:id/application/:id2              |
+| GET               | /associations                             |
+| GET               | /associations/:id                         |
+| GET               | /associations/:id/dashboard               |
+| PATCH             | /applications/:id/dashboard               |
+| DELETE            | /applications/:id/dashboard               |
+| GET               | /family/:id                               |
+| GET               | /family/:id/dashboard                     |
+| PATCH             | /family/:id/dashboard                     |
+| DELETE            | /family/:id/dashboard                     |
+| POST              | /forgot_password                          |
+| PATCH             | /reset_password                           |
+| POST              | /upload-image                             |
 
 ## 📌 Points d'amélioration prévus
 
